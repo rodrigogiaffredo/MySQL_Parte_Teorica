@@ -1,0 +1,132 @@
+
+# CRIAÇÃO DE BANCO DE DADOS SQL
+
+# O objetivo de um banco de dados é registrar instâncias separadas de objetos com características
+# semelhantes.
+
+# Por exemplo, uma ficha de dados pessoais que contenha nome, idade, peso, altura e nacionalidade,
+# pode ser utilizada para registrar o mesmo tipo de informação acerca dessas características para
+# muitas pessoas, ainda que os valores sejam totalmente diferentes.
+
+# Todas as fichas cadastrais das pessoas registrarão as mesmas características, porém para cada uma
+# das pessoas teremos seus valores particulares.
+
+# Algumas características até podem ser de preenchimento opcional, mas todas as pessoas que usarem
+# essa ficha terão à disposição o mesmo conjunto de características para registro de valores.
+
+# Podemos dizer então que a ficha de cadastro é uma tabela de dados com características próprias.
+
+# Do mesmo modo, eu poderia ter uma tabela para cadastrar jogos, contendo características tais como
+# título, fabricante, gênero e a plataforma.
+
+# Uma das grandes virtudes da organização das informações em tabelas de dados é a possibilidade de
+# separar objetos de acordo com as semelhanças e diferenças de suas características.
+
+# O conjunto das minhas tabelas é o que gera meu banco de dados. Podemos dizer portanto que o banco
+# de dados organiza os objetos com características semelhantes em diferentes tabelas, as quais estão
+# estruturadas de acordo com as semelhanças entre esses objetos (no meu exemplo, a tabela 'dados 
+# pessoais' para as pessoas, e a tabela 'catalogo' para os jogos, formam o meu banco de dados).
+
+# O conjunto de características de cada pessoa constitui o registro daquela pessoa, assim como o
+# conjunto de características de cada jogo constitui o registro daquele jogo.
+
+# Bancos de dados contém tabelas.
+
+# Tabelas contém registros.
+
+# Registros são compostos por campos.
+
+# Ou seja, quando criamos um banco de dados, logo em seguida criamos suas tabelas, e dentro delas 
+# criamos seus campos.
+
+# Assim como nos algoritmos as variáveis eram associadas aos seus diferentes tipos primitivos, os
+# campos de uma tabela também precisam dessa definição.
+
+# Existem muitos tipos primitivos no SQL, e os quatro principais clusters de agrupamento são:
+
+# - NUMÉRICO
+#   Subdivisões: INTEIRO, REAL, LÓGICO
+#   Precisão: no caso do INTEIRO: TinyInt, SamllInt, Int, MediumInt, BigInt
+#             no caso do REAL: Decimal, Float, Double, Real
+#             no caso do LÓGICO: Bit, Boolean
+
+# - DATA / TEMPO
+#   Subdivisões: não há.
+#   Precisão: Date, DateTime, TimeStamp, Time, Year
+
+# - LITERAL
+#   Subdivisões: CARACTERE, TEXTO, BINÁRIO, COLEÇÃO
+#   Precisão: no caso de CARACTERE: Char, VarChar
+#             no caso de TEXTO: TinyText, Text, MediumText, LongText
+#             no caso de BINÁRIO: TinyBlob, Blob, MediumBlob, LongBlob
+#             no caso de COLEÇÃO: Enum, Set
+
+# - ESPACIAL
+#   Subdivisões: não há.
+#   Precisão: Geometry, Point, Polygon, MultiPolygon
+
+
+# Importante: o dimensionamento das tabelas é fator fundamental da performance do sistema, por isso
+# é crucial que esse trabalho seja executado com extrema precisão. Precisão é dada pela quantidade
+# de bytes que serão utilizados para armazenar o dado.
+
+# Por exemplo, o TinyInt do subtipo INTEIRO ocupa muito menos bytes que o BigInt.
+
+# Outra boa ilustração é a diferença entre Var e VarChar: se eu digo que um campo CARACTERE Char 
+# terá 30 letras, e o nome da pessoa for apenas João, serão ocupados 4 espaços com letras, e os 
+# demais com espaços. Por outro lado, se eu disser que se trata de um CARACTERE VarChar com até 30
+# letras, o nome João ocupa 4 espaços, e os demais ficam vazios.
+
+
+
+
+# PRÁTICA EXECUTADA NO LARAGON / phpMyAdmin
+
+# No Laragon, quando clico em 'Database' no rodapé, ele abre a tela de login do phpMyAdmin, que é
+# a ferramenta usada no curso. Usuário 'root', senha em branco, e o sistema abre com a árvore
+# principal do lado esquerdo da tela, e um conjunto de abas do lado direito.
+
+# Para criar um banco de dados no MySQL usamos o comando CREATE DATABASE nome na aba SQL;
+
+# No meu exemplo, CREATE DATABASE cadastro; e CREATE DATABASE jogos;
+
+# phpMyAdmin, aba SQL, digitei CREATE DATABASE cadastro; e depois cliquei em 'Go' no 
+# rodapé da página, e ele criou o banco de dados 'cadastro', o qual ficou visível no topo do painel
+# do lado esquerdo da tela.
+
+# Já para criar uma tabela no MySQL usamos o comando CREATE TABLE nome ( );
+
+# No meu exemplo, CREATE TABLE pessoas ( ); e CREATE TABLE ficha ( );
+
+# Quando cliquei no nome do banco de dados na árvore principal do lado esquerdo ele já me colocou 
+# na aba Structure com a opção 'Create new table' em evidência.
+
+# Porém, mudei para a aba SQL para poder praticar a digitação do comando e os atributos dos campos.
+
+# Importante: validar que o disclaimer 'Run SQL query/queries on database [nomedobanco]:' esteja
+# apontando a criação no banco de dados correto (no meu caso era o 'cadastro').
+
+# Ficou assim:
+
+# CREATE TABLE pessoas (
+#    nome VARCHAR(30),
+#    idade TINYINT(3),
+#    sexo CHAR(1),
+#    peso FLOAT,
+#    altura FLOAT,
+#    nacionalidade VARCHAR(20)
+# );
+
+# Novamente, o navegador do lado esquerdo já mostrou, após a execução do comando SQL, as colunas
+# criadas dentro da tabela conforme as instruções passadas.
+
+# Para ver como ficou a tabela, eu posso tanto acessar a aba Structure do phpMyAdmin, quanto digitar
+# DESCRIBE pessoas; na aba SQL. Ao executar o comando, ele mostrou a tabela 'pessoas', seus campos
+# e as características (somente tipos até então) de cada campo, definidas no comando CREATE TABLE.
+
+# Nota: é crucial olhar o disclaimer de onde a query será executada (se no banco, se na tabela, se
+# num campo específico). O DESCRIBE por exemplo, funciona se o disclaimer estiver apontando para 
+# o banco de dados 'cadastro', portanto atenção.
+
+# Importante: no SQL, o símbolo ';' indica o fim de um comando. Portanto, tudo desde CREATE TABLE 
+# até ';' é apenas 1 comando para o SQL.

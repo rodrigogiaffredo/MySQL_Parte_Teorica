@@ -1,0 +1,102 @@
+
+# MELHORIAS NA ESTRUTURA DO BANCO DE DADOS
+
+# É possível informar qual será o formato dos dados de um banco já no momento da criação, a
+# partir do comando CREATE DATABASE nome;
+
+# A primeira ação desta aula foi apagar o banco de dados anterior, usado para prática dos
+# primeiros comandos de criação de banco e tabela. Fizemos assim pois o banco ainda não tinha
+# nenhum registro, portanto não havia necessidade de processos mais complexos.
+
+# Para apagar um banco de dados, usamos o comando DROP seguido de DATABASE nome;
+
+# O objetivo dessa aula é recriar o banco de dados com parâmetros adicionais. Na aula, usamos
+# CONSTRAINT e COLLATE.
+
+# Constraint (restrição): é uma regra aplicada a uma coluna ou tabela para garantir que os
+# dados estejam corretos e seguros.
+
+# Collate (coleção): define as regras de como o banco lê, ordena e compara letras, acentos e
+# maiúsculas em textos.
+
+# No exemplo da aula, incluimos o constraint DEFAULT CHARACTER SET relacionado ao padrão de
+# caracteres a ser adotado (optamos pelo padrão UTF-8, o qual contém a acentuação brasileira)
+# e o collate DEFAULT COLLATE também relacionado ao padrão UTF-8.
+
+# É possível também criar tabelas com campos mais inteligentes e tipos primitivos mais bem
+# dimensionados (economia de espaço em disco e maior precisão nos dados).
+
+# A primeira providência no sentido da otimização é substituir 'idade' por 'nascimento', já
+# que assim não serão mais necessárias atualizações constantes da informação a cada novo
+# aniversário.
+
+# Adicionalmente, designaremos o padrão UTF-8 também para a tabela criada, colocando o sufixo
+# DEFAULT CHARACTER utf8mb3 após o fechamento dos parênteses.
+
+# O campo 'nome', além da designação VARCHAR, ganhará a constraint NOT NULL indicando que se
+# trata de um dado obrigatório. O campo 'nascimento' será do tipo DATE, e o 'sexo' passará A
+# ser ENUM com as opções ('M','F') entre parênteses passando a ser uma coleção com valores
+# aceitos pré-definidos.O 'peso' passa a ser DECIMAL com 5 casas ao todo sendo 2 depois da 
+# vírgula, e para isso colocamos (5,2) entre parênteses. Mesma ideia para 'altura', porém na
+# condição (3,2).  O campo 'nacionalidade' ganha a constraint DEFAULT 'Brasil', que significa
+# que caso não seja preenchido um valor diferente, o cadastro será feito com 'Brasil' no campo.
+
+# Outro aprimoramento fundamental no exercício foi a criação da CHAVE PRIMÁRIA.
+
+# Chave Primária é o campo da tabela que não aceita dados repetidos em hipótese alguma.
+
+# Exemplos comuns de chaves primárias em tabelas são o CPF e o número de matrícula. Dois
+# registros diferentes não podem conter o mesmo número de CPF ou de matrícula.
+
+# Fizemos isso adicionando mais 2 linhas ao comando na criação da tabela, sendo a primeira
+# para a criação de um novo campo chamado 'id' do tipo numérico INT com as constraints NOT NULL
+# e AUTO_INCREMENT para que o próprio sistema gere o número no ato de inclusão do registro
+# (aplicável nesse caso, porém caso fosse uma indexação por CPF, essa constraint não existiria
+# pois queremos digitar o CPF da pessoa, e não pedir para o sistema gerar um número aleatório).
+
+# E para definir o campo 'id' como chave primária, na última linha antes de fechar os parênteses
+# usamos o comando PRIMARY KEY e colocamos entre parênteses o campo que será a chave primária,
+# no caso (id).
+
+
+
+
+
+
+# NA PRÁTICA USANDO phpMyAdmin VIA LARAGON
+
+# Para apagar o banco de dados 'cadastro' criado na aula anterior, fiz o seguinte:
+
+# Com o ambiente do phpMyAdmin aberto, vamos até a aba SQL e digitei o comando 
+# DROP DATABASE cadastro;
+
+# Clicando em 'Go', o banco de dados é totalmente apagado.
+
+# Já para criar o novo banco de dados com constraints (inicialmente apenas 2), usamos O
+# comando abaixo:
+
+# CREATE DATABASE cadastro
+# DEFAULT CHARACTER SET utf8mb3
+# DEFAULT COLLATE utf8mb3_general_ci;
+
+# Ao clicar em 'Go', o novo banco foi criado.
+
+# Aplicando as novas constraints e collates descritas nas anotações acima, criei a nova tabela
+# 'pessoas' conforme abaixo:
+
+# CREATE TABLE pessoas (
+#    id INT NOT NULL AUTO_INCREMENT,
+#    nome VARCHAR(30) NOT NULL,
+#    nascimento DATE,
+#    sexo ENUM('M','F'),
+#    peso DECIMAL(5,2),
+#    altura DECIMAL(3,2),
+#    nacionalidade VARCHAR(20) DEFAULT 'Brasil',
+#    PRIMARY KEY (id)
+#) DEFAULT CHARSET = utf8mb3;
+
+# A tabela 'pessoas' foi criada, e ao clicarmos nela na árvore principal dentro do banco de 
+# dados 'cadastro', selecionei a aba Structure e lá pude ver o detalhamento dos campos, com
+# os tipos, as constraints e collates todas descritas ali.
+
+
