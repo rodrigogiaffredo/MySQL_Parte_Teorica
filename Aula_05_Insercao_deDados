@@ -1,0 +1,164 @@
+
+# INSERÇÃO DE DADOS NA TABELA
+
+# Os comandos do SQL são agrupados por classes, e aqueles relacionados a estrutura do banco de dados (os CREATE
+# por exemplo), são conhecidos como comandos DDL - Data Definition Language.
+
+# Comandos DDL utilizados até aqui: CREATE DATABASE e CREATE TABLE
+
+# Para inclusão de dados nas tabelas, o primeiro passo é listar os nomes dos campos criados - separados por
+# vírgula, abrindo parênteses antes do primeiro campo, e fechando depois do último.
+
+# Para visualizar os campos da tabela na ordem em que foram criados, seleciona a tabela e visualiza a aba
+# 'Structure'.
+
+# No meu exemplo, são eles: (id, nome, nascimento, sexo, peso, altura, nacionalidade)
+
+# Na linha de baixo, novamente entre parênteses, preenche cada um dos dados dos campos da lista entre
+# aspas simples, respeitando exatamente a mesma ordem usada nos parênteses com os campos. Ponto e vírgula.
+
+# ('1', 'Gustavin', '1984-01-02', 'M', '78.5', '1.83', 'Brasil');
+
+# Nota: em bancos de dados MySQL, as datas são no formato YYYY-MM-DD; o separador de decimais é ponto (.);
+        dados estarão sempre entre aspas simples (inclusive números), e tudo que não estiver entre aspas será
+        considerado uma constraint.
+
+# Esse sequenciamento ajuda a fixar a estrutura do comando nos primeiros passos. O que queremos fazer é:
+
+# INSERIR na tabela
+# (campos da tabela numa determinada ordem)
+# os VALORES
+# (valores a serem inseridos nos respectivos campos, na mesma ordem);
+
+# Portanto, no meu exemplo ficou:
+
+# INSERT INTO pessoas
+# (id, nome, nascimento, sexo, peso, altura, nacionalidade)
+# VALUES
+# ('1', 'Gustavin', '1984-01-02', 'M', '78.5', '1.83', 'Brasil');
+
+# Porém se nos lembrarmos de como a tabela 'pessoas' foi criada, veremos que o campo 'id' tem as constraints
+# NOT NULL e AUTO_INCREMENT, portanto ele não precisa ser preenchido já que o próprio banco de dados  atribuirá
+# valores a ele.
+
+# Por isso, no meu caso pude remover o campo 'id' e o dado '1' do comando:
+
+# INSERT INTO pessoas
+# (nome, nascimento, sexo, peso, altura, nacionalidade)
+# VALUES
+# ('Gustavin', '1984-01-02', 'M', '78.5', '1.83', 'Brasil');
+
+# Após a inserção, posso usar um SELECT * (onde o asterisco significa 'tudo') para validar se a inserção foi
+# bem sucedida:
+
+# SELECT * FROM pessoas;
+
+# Em seguida inserimos os dados de outra pessoa:
+
+# ('Maria', '1999-12-30', 'F', '55.2', '1.65', 'Portugal')
+
+# É totalmente desnecessário, mas caso queira mencionar o campo 'id' no comando INSERT apesas de ele ser
+# AUTO_COMPLETE, basta usar a constraint DEFAULT ao invés de um dado (constraints não pedem aspas). Aproveitei
+# para exercitar também a constraint DEFAULT no campo 'nacionalidade', a qual foi atribuída quando criei a
+# tabela:
+
+# INSERT INTO pessoas
+# (id, nome, nascimento, sexo, peso, altura, nacionalidade)
+# VALUES
+# (DEFAULT, 'Creuza', '1920-01-02', 'F', '50.2', '1.83', DEFAULT);
+
+# Nota: se a ordem dos dados inseridos for exatamente a mesma ordem em que os campos aparecem na tabela, não
+# é necessário colocar a lista de campos logo abaixo do INSERT INTO.
+
+# O comando ficaria:
+
+# INSERT INTO pessoas VALUES
+# (DEFAULT, 'Adalgiza', '1930-11-02', 'F', '63.2', '1.75', 'Irlanda');
+
+# É possível inserir diversos registros simultâneamente usando apenas uma vez o comando INSERT INTO, a diferença
+# é que cada tupla de dados será separada por vírgula, e se os dados na tupla estiverem na ordem correta dos
+# campos da tabela, é possível usar o formato simplificado do comando.
+
+# Por exemplo:
+
+# INSERT INTO pessoas VALUES
+# (DEFAULT, 'Ana', '1975-12-22', 'F', '52.3', '1.45', 'EUA'),
+# (DEFAULT, 'Pedro', '2000-07-15', 'M', '52.3', '1.45', 'Brasil'),
+# (DEFAULT, 'Maria', '1999-05-30', 'F', '75.9', '1.70', 'Portugal');
+
+# INSERT INTO pertence a outra classe de comandos SQL, chamada DML - Data Manipulation Language.
+
+# DML é a classe que contém os comandos de manipulação de dados.
+
+
+
+
+
+# NO phpMyAdmin VIA LARAGON
+
+# Interessante: ao invés de clicar no nome do banco de dados para torná-lo ativo, posso usar o seguinte comando
+# na aba SQL: USE nome;
+
+# No meu caso:
+
+# USE cadastro;
+
+# Ainda na aba SQL, com a tabela 'pessoas' selecionada, abri o detalhamento dos campos através da aba Structure
+# para poder pegá-los na ordem certa.
+
+# (nome, nascimento, sexo, peso, altura, nacionalidade)
+
+# Nota: o campo 'id' ficou de fora por ter sido definido como AUTO_INCREMENT na criação da tabela.
+
+# Pula uma linha, e cria novos parênteses contendo as respostas dos campos entre aspas simples:
+
+# ('Gustavin', '1984-01-02', 'M', '78.5', '1.83', 'Brasil');
+
+# Em seguida bastou incluir INSERT INTO pessoas na primeira linha de comando, e VALUES entre as duas listas.
+
+# Ficou assim:
+
+# INSERT INTO pessoas
+# (nome, nascimento, sexo, peso, altura, nacionalidade)
+# VALUES
+# ('Gustavin', '1984-01-02', 'M', '78.5', '1.83', 'Brasil');
+
+# Após executar o comando via ctrl + enter (ou clicando em 'Go'), mesmo com o status de comando bem sucedido, 
+# usei o comando SELECT com asterisco (que significa 'tudo') para ver como a tabela ficou.
+
+# SELECT * FROM pessoas;
+
+# Inserção de novo registro:
+
+# ('Maria', '1999-12-30', 'F', '55.2', '1.65', 'Portugal')
+
+# Inserção de novo registro exercitando a constraint DEFAULT onde cabível (campos 'id', o qual é AUTO_COMPLETE
+# e 'nacionalidade', o qual usa o dado DEFALUT 'Brasil'):
+
+# INSERT INTO pessoas
+# (id, nome, nascimento, sexo, peso, altura, nacionalidade)
+# VALUES
+# (DEFAULT, 'Creuza', '1920-01-02', 'F', '50.2', '1.83', DEFAULT);
+
+# Ao executar, vemos a criação correta do id '3' (sequência), e a inserção do dado 'Brasil' no campo
+# nacionalidade (dado definido como DEFAULT na criação da tabela).
+
+# Exercitando o comando INSET sem menção dos campos do banco de dados, já que os dados serão informados 
+# exatamente na ordem em que os campos da tabela foram estruturados:
+
+# INSERT INTO pessoas VALUES
+# (DEFAULT, 'Adalgiza', '1930-11-02', 'F', '63.2', '1.75', 'Irlanda');
+
+# Exercitando a inserção de diversos registros simultâneamente, usando comando simplificado por respeitar aba
+# ordem dos campos na estrutura da tabela:
+
+# INSERT INTO pessoas VALUES
+# (DEFAULT, 'Claudio', '1975-04-22', 'M', '99.0', '2.15', 'Brasil'),
+# (DEFAULT, 'Pedro', '1999-12-03', 'M', '87', '2', DEFAULT),
+# (DEFAULT, 'Janaína', '1987-11-12', 'F', '75.4', '1.66', 'EUA');
+
+# Nota: apesar de eu ter digitado alguns pesos e alturas sem mencionar as decimais, no banco de dados o números
+# fica formatado pois definimos a estrutura do campo para conter casas decimais (peso e altura).
+
+
+
