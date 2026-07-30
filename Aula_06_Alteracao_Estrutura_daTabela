@@ -1,0 +1,212 @@
+
+# ALTERAÇÕES NA ESTRUTURA DA TABELA
+
+# Os comandos ALTER TABLE e DROP TABLE estão na classificação DDL - Data Definition Language, pois mexem na
+# estrutura do banco de dados, e portanto juntam-se aos comandos CREATE DATABASE e CREATE TABLE vistos em aulas
+# anteriores.
+
+# É possível alterar tabelas criadas em bancos de dados, e a primeira possibilidade que aprendi para isso foi
+# o uso do comando ALTER com diversos parâmetros adicionais.
+
+# Inicialmente inseri uma nova coluna na tabela (lembrando que em SQL coluna é o nome dado aos campos de uma
+# tabela) chamada 'profissao', e para isso usei o parâmetro ADD COLUMN.
+
+# ALTER TABLE pessoas
+# ADD COLUMN profissao VARCHAR(10);
+
+# Como o banco de dados 'cadastro' já possuia registros, a coluna foi inserida e o valor ficou NULL para todas
+# as pessoas cadastradas.
+
+# A nova coluna foi inserida como último campo da tabela, porém caso necessário é possível inserí-la em outra
+# posição qualquer. Para isso, vamos primeiro aprender outro parâmetro de alteração de tabelas, utilizado para
+# apagar campos da tabela, que é o parâmetro DROP após o comando ALTER.
+
+# ALTER TABLE pessoas
+# DROP COLUMN profissao;
+
+# Agora, para adicionar a coluna 'profissao' numa nova posição específica, por exemplo após a coluna 'nome', 
+# usamos o parâmetro ADD COLUMN..AFTER juntamente com o comando ALTER TABLE.
+
+# ALTER TABLE pessoas
+# ADD COLUMN profissao VARCHAR(10) AFTER nome;
+
+# Essa estrutura funciona da segunda posição em diante da tabela. Para inserir um campo substituindo o primeiro
+# usamos o parâmetro ADD COLUMN..FIRST no comando ALTER TABLE.
+
+# Por exemplo, vamos inserir o campo 'codigo' do tipo inteiro no início da tabela 'pessoas':
+
+# ALTER TABLE pessoas
+# ADD COLUMN codigo INT FIRST;
+
+# Em resumo: ADD COLUMN sem sufixo insere o campo na última posição; com sufixo FIRST insere na primeira posição;
+#            com sufixo AFTER insere logo após o campo mencionado no comando.
+
+# Nota: a palavra COLUMN é opcional, posso usar uma versão reduzida do parâmetro para adicionar novos campos
+# somente com ADD, pois o comando ALTER TABLE já pressupõe que as alterações serão numa tabela. Por exemplo:
+
+# ALTER TABLE
+# ADD codigo INT FIRST;
+
+# Ainda no escopo das alterações de tabelas, é possível modificar as definições dos campos, e para isso usamos
+# o parâmetro MODIFY.
+
+# MODIFY serve tanto para alterar o tipo primitivo do campo, quanto para modificar todas as suas constraints.
+# Só não é possível renomear um campo usando MODIFY, existe outro parâmetro específico para isso.
+
+# Por exemplo, atualmente o VARCHAR de 'profissao' é (10), e quero aumentar para (20). Além disso, quero incluir
+# a constraint NOT NULL com o DEFAULT vazio. Fica assim:
+
+# ALTER TABLE pessoas
+# MODIFY COLUMN profissao VARCHAR(20) NOT NULL DEFAULT '';
+
+# Para renomear campos, usamos o parâmetro CHANGE junto com o nome atual, seguido do novo nome que quero dar ao
+# campo. No meu exemplo, mudei de 'profissao' para 'prof'.
+
+# ALTER TABLE pessoas
+# CHANGE COLUMN profissao prof VARCHAR(20);
+
+# Em resumo, MODIFY altera tipos e constraints, e CHANGE altera tipos, constraints e o nome do campo.
+
+# Para renomear a tabela inteira, o parâmetro utilizado é o RENAME TO. Por exemplo, para mudar o nome da tabela
+# 'pessoas' para 'individuos', uso o comando:
+
+# ALTER TABLE pessoas
+# RENAME TO individuos;
+
+# Para exercitar outros parâmetros, criamos uma nova tabela com os campos nome, descricao, carga, totaulas e ano.
+# Um parâmetro novo interessante usado na criação dessa tabela foi o IF NOT EXISTS que valida se já existe uma
+# tabela com esse nome, e se não existir a cria direto. 
+
+# Usamos tamBém uma nova constraint chamada UNIQUE que não permite valores repetidos no campo, mesmo que ele não
+# seja uma chave primária.
+
+# Outra constraint nova utilizada foi a UNSIGNED na carga horária e no total de aulas, que transforma o valor
+# numérico INT em valor absoluto, ou seja, sem um sinal (já que não existe curso com carga horária ou total
+# de aulas negativos).
+
+# CREATE TABLE IF NOT EXISTS cursos (
+#    nome VARCHAR(30) NOT NULL UNIQUE,
+#    descricao TEXT,
+#    carga INT UNSIGNED
+#    totaulas INT UNSIGNED,
+#    ano YEAR DEFAULT '2026'
+# ) DEFAULT CHARSET = utf8mb3
+
+# Propositalmente não criamos a chave primária junto com a tabela, e apesar de o campo 'curso' ser UNIQUE,
+# não é ele que será nossa chave primária, e sim o campo 'idcurso', o qual será inserido como primeiro campo
+# da tabela através do parâmetro FIRST.
+
+# Nota: não é possível criar um campo e torná-lo chave primária no mesmo comando, é preciso primeiro criar para
+# depois colocar como chave primária.
+
+# ALTER TABLE cursos
+# ADD COLUMN idcurso INT FIRST;
+
+# O parâmetro para designação do campo como chave primária é ADD PRIMARY KEY:
+
+# ALTER TABLE cursos
+# ADD PRIMARY KEY(idcurso);
+
+# Quando queremos apagar a tabela inteira, o comando deixa de ser ALTER TABLE e passa a ser DROP TABLE.
+
+# Digamos que eu crie uma tabela 'teste' e depois queira removê-la totalmente:
+
+# CREATE TABLE IF NOT EXISTS teste(
+    id INT,
+    nome VARCHAR(10),
+    idade INT
+);
+
+# Nota: é recomendável usar o parâmetro IF EXISTS juntamente com o DROP TABLE.
+
+# DROP TABLE IF EXISTS teste;
+
+
+
+
+
+
+
+# EXERCITANDO NO phpMyAdmin VIA LARAGON
+
+# Com o banco de dados 'cadastro' selecionado, na aba SQL, usei o comando abaixo para inserir uma coluna na
+# tabela 'pessoas':
+
+# ALTER TABLE pessoas
+# ADD COLUMN profissao VARCHAR(10);
+
+# Usei também o comando DESCRIBE para mostrar a nova estrutura da tabela, logo após a inserção da nova coluna:
+
+# DESCRIBE pessoas;
+
+# Nota: o comando DESCRIBE também funciona em sua forma reduzida DESC:
+
+# DESC pessoas;
+
+# Para remover um campo da tabela, usei o parâmetro DROP juntamente com o comando ALTER:
+
+# ALTER TABLE pessoas
+# DROP COLUMN profissao;
+
+# Inserindo novamente a coluna 'profissao', mas dessa vez numa posição específica, logo após a coluna 'nome':
+
+# ALTER TABLE pessoas
+# ADD COLUMN profissao VARCHAR(10) AFTER nome;
+
+# Adicionando o campo 'codigo' no início da tabela usando a versão reduzida do comando (sem COLUMN):
+
+# ALTER TABLE pessoas
+# ADD codigo INT FIRST;
+
+# Para modificar definições usamos MODIFY, e no exemplo da aula aumentamos o VARCHAR do campo 'profissao' de
+# (10) para (20) e incluímos a constraint NOT NULL com o DEFAULT vazio:
+
+# ALTER TABLE pessoas
+# MODIFY COLUMN profissao VARCHAR(20) NOT NULL DEFAULT '';
+
+# Mudando o nome do campo 'profissao' para 'prof' usando o parâmetro CHANGE:
+
+# ALTER TABLE pessoas
+# CHANGE COLUMN profissao prof VARCHAR(20);
+
+# Nota: como não usei a constraint NOT NULL DEFAULT '' o campo voltou a ser NULL=YES.
+
+# Alterando o nome da tabela através do parâmetro RENAME TO:
+
+# ALTER TABLE pessoas
+# RENAME TO individuos;
+
+# Criação da nova tabela para exercício de parâmetros adicionais:
+
+# CREATE TABLE IF NOT EXISTS cursos (
+#    nome VARCHAR(30) NOT NULL UNIQUE,
+#    descricao TEXT,
+#    carga INT UNSIGNED
+#    totaulas INT UNSIGNED,
+#    ano YEAR DEFAULT '2026'
+# ) DEFAULT CHARSET = utf8mb3
+
+# Inserindo o campo 'idcurso' na tabela na primeira posição, para torná-lo chave primária em seguida:
+
+ALTER TABLE cursos
+ADD COLUMN idcurso INT FIRST;
+
+# Designando a coluna 'idcurso' como chave primária:
+
+# ALTER TABLE cursos
+# ADD PRIMARY KEY(idcurso);
+
+# Usando o DROP TABLE para apagar uma tabela inteira, após ter criado um 'teste' para aprendizagem do comando:
+
+# CREATE TABLE IF NOT EXISTS teste(
+    id INT,
+    nome VARCHAR(10),
+    idade INT
+);
+
+# DESC teste;
+
+# Após visualizar a tabela criada, vamos apagá-la completamente:
+
+# DROP TABLE IF EXISTS teste;
+
