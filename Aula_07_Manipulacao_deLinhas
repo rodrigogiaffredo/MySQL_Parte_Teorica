@@ -1,0 +1,217 @@
+
+# MANIPULAÇÃO DE REGISTROS (OU LINHAS, OU TUPLAS) NO BANCO DE DADOS
+
+# Os comandos de manipulação de registros são DML - Data Manipulation Language.
+
+# A coletânea de registros de uma tabela é chamada de Result Set, o qual é composto por linhas (registros) e
+# colunas (campos).
+
+# Assim como para manipular colunas existem comandos específicos (ALTER TABLE + PARÂMETROS), para manipular
+# linhas também há.
+
+# Começamos inserindo registros na tabela 'cursos':
+
+# INSERT INTO cursos VALUES
+# ('1', 'HTML4', 'Curso de HTML5', '40', '37', '2014'),
+# ('2', 'Algoritmos', 'Lógica de Programação', '20', '15', '2014'),
+# ('3', 'Photoshop', 'Dicas de Photoshop CC', '10', '8', '2014'),
+# ('4', 'PGP', 'Curso de PHP para iniciantes', '40', '20', '2010'),
+# ('5', 'Jarva', 'Introdução à Linguagem Java', '10', '29', '2000'),
+# ('6', 'MySQL', 'Banco de Dados MySQL', '30', '15', '2016'),
+# ('7', 'Word', 'Curso completo de Word', '40', '30', '2016'),
+# ('8', 'Sapateado', 'Danças Rítmicas', '40', '30', '2018'),
+# ('9', 'Cozinha Árabe', 'Aprenda a fazer Kibe', '40', '30', '2018'),
+# ('10', 'YouTuber', 'Gerar polêmica e ganhar inscritos', '5', '2', '2018');
+
+# NOTA: não é possível manipular mais de uma linha ao mesmo tempo, cada comando manipula apenas uma linha. Porém
+# é possível mexer em diversas colunas de uma linha ao mesmo tempo, se necessário.
+
+# Propositalmente, alguns erros foram cometidos na inserção dos dados dos cursos na tabela 'cursos', 
+# os quais estão sinalizados com (X) no quadro abaixo:
+
+# idcurso       nome          carga           ano
+# 1             HTML4(X)      40              2014
+# 4             PGP(X)        40              2010(X)
+# 5             Jarva(X)      10(X)           2000(X)
+
+# Para modificar linhas, usamos o comando UPDATE 'tabela' com parâmetros que variam de acordo com a necessidade.
+# Começamos a atualização pelo primeiro registro, que está com uma inconsistência no campo 'nome'. Os parâmetros
+# utilizados nesse caso são SET para mencionar que campo deve ser alterado e para qual valor, e o parâmetro
+# WHERE que sinaliza qual linha deve ser afetada pela alteração.
+
+# Essa é uma das utilidades importantes dos campos UNIQUE, mais ainda das chaves primárias, pois assim posso
+# especificar que, no meu exemplo, a alteração deve ser feita no dado do campo 'nome' da chave primária 1.
+
+# UPDATE cursos
+# SET nome = 'HTML5'
+# WHERE idcurso = '1';
+
+# A lógica do comando é ATUALIZE a tabela 'cursos' DEFININDO o dado do campo 'nome' como HTML5 na linha 
+# ONDE 'idcurso' for igual a 1.
+
+# Para corrigir a próxima linha com erro, teremos que mudar dados de mais de um campo ('nome' e 'ano') e para
+# isso usamos o comando e os parâmetros UPDATE, SET, WHERE com uma pequena alteração na linha do parâmetro SET
+# que é a separação por vírgula dos campos que precisam de alterações em seus dados:
+
+# UPDATE cursos
+# SET nome = 'PHP', ano = '2015'
+# WHERE idcurso = '4';
+
+# Mesma lógica para a próxima linha com erro:
+
+# UPDATE cursos
+# SET nome = 'Java', carga = '40', ano = '2015'
+# WHERE idcurso = '5'
+# LIMIT 1;
+
+# NOTA: o professor mostrou nesse comando o parâmetro LIMIT, que define quantas linhas serão afetadas pelo
+# comando e reduzem a possibilidade de alterações em registros que não deveriam ser modificados, no caso de
+# alterações massivas por exemplo. Entendi a utilidade, mas a explicação e o exemplo ficaram meio ruins porque
+# como estou apontando sempre para a chave primária como critério de alteração do dado, e ela não se repete
+# em hipótese alguma, não há por que usar o delimitador de linhas. Enfim...
+
+# Mas no exemplo seguinte o professor sugeriu uma mudança massiva sem menção da chave primária, usando como
+# condição um dado específico. Os 3 últimos cursos serão o próximo alvo da alteração, e a condição para a 
+# mudança será ter ano = 2018.
+
+# UPDATE cursos
+# SET ano = '2050', carga = '400'
+# WHERE ano = '2018';
+
+# Agora vamos ver o LIMIT em ação, mudando o ano e a carga horária de apenas o primeiro registro que contiver
+# os dados usados como condição nos campos mencionados no comando. Quando executada, essa alteração vai afetar
+# somente o primeiro registro que respeita as condições (se o LIMIT fosse 2, os 2 primeiros, e assim
+# sucessivamente). No meu exemplo, só o curso de sapateado será impactado pela mudança proposta no comando.
+
+# UPDATE cursos
+# SET ano = '2018', carga = '0'
+# WHERE ano = '2050'
+# LIMIT 1;
+
+# É possível remover completamente os registros das tabelas, e para isso usamos o comando DELETE FROM 'tabela'
+# e o parâmetro WHERE para apontar a linha específica, no nosso caso usando a chave primária 'idcurso'.
+
+# No nosso exemplo, vamos remover os 3 últimos cursos cujos ids são 8, 9 e 10.
+
+# DELETE FROM cursos
+# WHERE idcurso = '8';
+
+# Assim como no UPDATE, é possível apagar diversos registros ao mesmo tempo apontando para uma condição que
+# seja comum a todos eles. Por exemplo, os cursos cujos ids são 9 e 10 estão com o dado 2050 no campo 'ano'.
+# Portanto, os registros podem ser apagados usando esse dado como condição, ao invés da chave primária:
+
+# DELETE FROM cursos
+# WHERE ano = '2050';
+
+# NOTA: aqui também é possível usar o parâmetro LIMIT, se e quando cabível.
+
+
+# É possível também remover todos os registros de uma tabela de uma vez só, através do comando
+# TRUNCATE TABLE 'tabela'.
+
+# No meu exemplo, o comando abaixo deixaria a tabela 'cursos' completamente vazia:
+
+# TRUNCATE TABLE cursos;
+
+# Nota: é possível usar a versão curta do comando, sem o parâmetro TABLE, apenas:
+
+# TRUNCATE cursos;
+
+
+
+
+
+
+
+
+
+
+# PRATICANDO NO phpMyAdmin VIA LARAGON
+
+# Os dois primeiros comandos utilizados na aula me ensinaram que ao abrir uma query, é boa prática iniciar o uso
+# do banco de dados, e em seguida acessar as tabelas.
+
+# Quando tentei executar o SELECT numa das tabelas sem iniciar o USE do banco, houve um erro. A correção foi
+# acessar o banco antes de fazer a consulta:
+
+# USE cadastro;
+# SELECT * FROM individuos;
+
+# Inserção de dados na tabela 'cursos' para utilização durante a aula:
+
+# INSERT INTO cursos VALUES
+# ('1', 'HTML4', 'Curso de HTML5', '40', '37', '2014'),
+# ('2', 'Algoritmos', 'Lógica de Programação', '20', '15', '2014'),
+# ('3', 'Photoshop', 'Dicas de Photoshop CC', '10', '8', '2014'),
+# ('4', 'PGP', 'Curso de PHP para iniciantes', '40', '20', '2010'),
+# ('5', 'Jarva', 'Introdução à Linguagem Java', '10', '29', '2000'),
+# ('6', 'MySQL', 'Banco de Dados MySQL', '30', '15', '2016'),
+# ('7', 'Word', 'Curso completo de Word', '40', '30', '2016'),
+# ('8', 'Sapateado', 'Danças Rítmicas', '40', '30', '2018'),
+# ('9', 'Cozinha Árabe', 'Aprenda a fazer Kibe', '40', '30', '2018'),
+# ('10', 'YouTuber', 'Gerar polêmica e ganhar inscritos', '5', '2', '2018');
+
+# Corrigindo o nome do curso correspondente ao 'idcurso' 1:
+
+# USE cadastro;
+
+# UPDATE cursos
+# SET nome = 'HTML5'
+# WHERE idcurso = '1';
+
+# Corrigindo o nome e o ano do curso correspondente ao 'idcurso' 4:
+
+# USE cadastro;
+
+# UPDATE cursos
+# SET nome = 'PHP', ano = '2015'
+# WHERE idcurso = '4';
+
+# Corrigindo nome, carga e ano do curso correspondente ao 'idcurso' 5, juntamente com o parâmetro LIMIT:
+
+# USE cadastro;
+
+# UPDATE cursos
+# SET nome = 'Java', carga = '40', ano = '2015'
+# WHERE idcurso = '5'
+# LIMIT 1;
+
+# Alterando dados em mais de um campo, de mais de uma linha:
+
+# USE cadastro
+
+# UPDATE cursos
+# SET ano = '2050', carga = '400'
+# WHERE ano = '2018';
+
+# Usando LIMIT para restringir a alteração ao primeiro registro que contiver as condições definidas:
+
+# USE cadastro;
+
+# UPDATE cursos
+# SET ano = '2018', carga = '0'
+# WHERE ano = '2050'
+# LIMIT 1;
+
+# Apagando um registro inteiro da tabela 'cursos':
+
+# USE cadastro;
+
+# DELETE FROM cursos
+# WHERE idcurso = '8';
+
+# Apagando mais de um registro simultâneamente, usando um dado como condição (e não uma chave primária):
+
+# USE cadastro;
+
+# DELETE FROM cursos
+# WHERE ano = '2050';
+
+# Apagando todos os registros da tabela 'cursos' de uma só vez:
+
+# USE cadastro;
+
+# TRUNCATE TABLE cursos;
+
+
+
