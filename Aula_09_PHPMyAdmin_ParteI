@@ -1,0 +1,68 @@
+
+# PHP MY ADMIN PARTE I
+
+# Apesar de eu estar no phpMyAdmin desde o começo do curso, nessa aula e na próxima o professor manteve o foco
+# no uso da ferramenta, então eventualmente surjam ações que não tomei ainda, e que podem ser adicionadas ao 
+# roteiro de estudos.
+
+# A ênfase da primeira aula será no uso do console.
+
+# Bancos de dados ficam armazenados ou localmente (os que crio no SQLite, por exemplo), ou em servidores que
+# podem ser acessados por qualquer máquina, desde que tenhamos o endereço do servidor, o usuário e a senha.
+
+# Sempre que estivermos no console, de numa ferramenta SQL, podemos usar o comando SHOW DATABASES; para saber
+# quais bancos de dados estão armazenados naquele servidor.
+
+# Para saber se (e qual) banco de dados está aberto naquele momento, uso o comando STATUS;
+
+# Normalmente, no primeiro acesso a linha 'Current database: ' estará em branco, e para acessar um determinado
+# banco basta usar o comando USE 'nome'; para que ele se torne ativo.
+
+# Para saber quais tabelas compõem um banco de dados usando o console, após abrir o respectivo banco, uso o 
+# comando SHOW TABLES;
+
+# Para saber qual a estrutura de uma determinada tabela, uso DESCRIBE 'tabela';
+
+# Para saber quais são os registros de uma tabela, uso SELECT * FROM 'tabela';
+
+# Enfim, todos os comandos aprendidos até aqui podem ser utilizados no console. Por exemplo, para renomear um
+# registro da tabela cursos uso UPDATE cursos SET nome = 'novonome' WHERE idcurso = 'X';
+
+# NOTA: no console, seta para cima e seta para baixo navegam entre os comandos já digitados, útil por exemplo
+# para voltarmos ao comando SELECT após fazermos alguma atualização de registros na tabela.
+
+# Longa-história-curta: tirando os bancos criados em SQLite (que ficam armazenados na máquina), sempre que um
+# banco de dados estiver num servidor, podemos usar o mesmo set de comandos para gerenciá-lo, independentemente
+# de estarmos numa ferramenta, ou no console.
+
+# Além do uso de comandos, hoje existem diversas ferramentas de clique e arrasto que executam exatamente os 
+# mesmos comandos, porém aprender os comandos é o que dá flexibilidade de uso de diversas possibilidades para a 
+# gestão de bancos de dados, inclusive através do console.
+
+# Mas principalmente porque quando adicionamos as chamadas para bancos de dados nas diversas linguagens de
+# programação, temos que usar os comandos (Python por exemplo, usei bastante no screener e no backtest).
+
+# phpMyAdmin é uma ferramenta que facilita a criação e a manutenção de bancos de dados MySQL.
+
+# Nele, ao invés de usar a aba SQL como fiz até agora, eu poderia por exemplo navegar até a tabela 'individuos'
+# e na aba 'Browse' eu poderia atualizar um determinado registro apenas selecionando (marcando a checkbox) e 
+# clicando em 'Edit'.
+
+# Na aula, alteramos o registro 'Adalgiza' da tabela 'individuos' manualmente, mudando seu peso para 83.20 e 
+# após clicar em 'Go', o registo é automaticamente atualizado.
+
+# Interessante notar que serão mostrados na tela de log tanto o comando quanto os parâmetros que seriam
+# utilizados caso eu tivesse alterado via aba 'SQL':
+
+# UPDATE cadastro, individuos SET peso = '83.20' WHERE invididuos.id = '4';
+
+# NOTA: graças a esse log, podemos aproveitar as facilidades de clique e arrasto do phpMyAdmin para aprender
+# as linhas as linhas de comando que o programa gera no log.
+
+# Longa-história-curta: ferramentas apenas manipulam informações contidas num servidor. Conhecer ferramentas é
+# bom, mas conhecer comandos é melhor, principalmente quando meus programas em outras linguagens precisarem
+# interagir com bancos de dados.
+
+
+
+
