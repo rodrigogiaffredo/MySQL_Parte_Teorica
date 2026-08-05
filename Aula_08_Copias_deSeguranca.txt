@@ -1,0 +1,29 @@
+
+# GERENCIAMENTO DE CÓPIAS DE SEGURANÇA
+
+# Normalmente, bancos de dados estão hospedados em servidores, e por isso os backups de bancos de dados criados
+# fora desses servidores são chamados de DUMPS.
+
+# Gerar um dump de um banco de dados significa fazer um backup dele, e esse backup pode posteriormente ser
+# movido para outros servidores, ou resgatado para o próprio servidor de origem sempre que necessário.
+
+# Cópias de segurança são criadas, mantidas e recuperadas através do sistema de gerenciamento de servidores,
+# no meu caso o phpMyAdmin.
+
+# Após a exportação, abri o arquivo gerado no Notepad++ e vi que lá estão praticamente todos os comandos que vi
+# até agora no curso, é como se um roteiro de criação (desde o banco de dados até a inserção de registros,
+# passando pela criação de tabelas) estivesse pronto para ser executado.
+
+# Adicionalmente, o cabeçalho traz informações sobre o servidor e uma time stamp.
+
+# É praticamente o passo a passo que usei para criar o banco de dados 'cadastro' e suas tabelas 'individuos' e
+# 'cursos'.
+
+# Para importar um banco de dados, basta encontrar a opção 'Import' ou equivalente, e carregar o arquivo dump
+# gerado no passo a passo da exportação.
+
+
+
+
+
+
