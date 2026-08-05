@@ -1,0 +1,114 @@
+
+# PHP MY ADMIN PARTE II
+
+# Relembrando, sempre que o banco de dados estiver num servidor, a ferramenta que intermedia o acesso a ele
+# não é tão importante quanto saber comandos. Por isso, aprendemos primeiro os comandos, para em seguida
+# conhecer as ferramentas.
+
+# O foco dessa aula é criar banco de dados, tabelas, e campos com suas respectivas constraints e parâmetros
+# mas agora usando uma ferramenta de clica e arrasta, ao invés de apenas comandos de terminal.
+
+# Criando o banco de dados
+
+# Na aba 'Databases' preenchemos o nome do novo banco no campo 'Database name' e escolhemos sua respectiva
+# 'Collation' (comando DEFAULT CHARSET) para questões de acentuação (utf8mb4_general_ci é a da vez na 
+# época dos meus estudos).
+
+# Clicando em 'Create', o banco é criado e já aparece na lista do menu principal.
+
+# Criando tabelas
+
+# Assim que o banco de dados é criado, o phpMyAdmin abre a tela de criação de tabelas, pedindo 'Table name'
+# e 'Number of columns'- lembrando que em tabelas de bancos de dados, colunas equivalem aos campos.
+
+# No meu exemplo serão 3 campos, e logo após clicar em 'Create table' sou direcionado apra a tela de 
+# cadastramento dos campos, com uma linha separada para cada um deles, e diversas parametrizações possíveis.
+
+# Criei as colunas 'id', 'nome' e 'telefone'. Em seguida defino o tipo primitivo de cada campo, escolhendo
+# na lista completa que aparece ao clicarmos em 'Type'.No meu exemplo, os tipos são 'INT', 'VARCHAR' e
+# 'VARCHAR' respectivamente.
+
+# Nos campos com tipo VARCHAR é necessário indicar também o tamanho do campo, no meu exemplo ficou 30 e 11
+# respectivamente. Em seguida e se necessário é possível dizer se o campo tem algum valor 'Default', no meu
+# caso não foi necessário.
+
+# Existe o checkbox da opção 'Null', e o padrão do phpMyAdmin é que todos os campos sejam NOTNULL, portanto
+# preciso marcar aqueles para os quais eu aceito o registro vazio, no meu exemplo escolhi o campo 
+# 'telefone'.
+
+# Na opção 'Index' consigo definir se o campo é PRIMARY key, UNIQUE value, INDEX puro ou FULLTEXT. No meu
+# exemplo defini 'id' como chave primária e 'nome' como unique.
+
+# A checkbox A_I equivale ao comando AUTO_INCREMENT e eu marquei essa opção para o campo 'id'. Clicando em
+# 'Save', a tabela é criada e sou direcionado para a aba 'Structure', com todo o detalhamento sobre ela.
+
+# NOTA: uma dica legal, é possível usar o comando SHOW CREATE TABLE 'nomedatabela'; para ver a linha de
+# comando usada para criar a tabela. Com isso, consigo transformar os passos dados no phpMyAdmin em linhas
+# de comando, excelente para estudos por exemplo. A mesma ideia funciona para SHOW CREATE DATABASE 'nome'.
+
+# As mudanças nos campos são feitas selecionando a tabela na árvore principal, e navegando até a aba
+# 'Structure'. No meu exemplo, mudei o nome do campo 'tel' para 'telefone' e aumentei a largura do campo
+# de 11 para 15 caracteres, clicando em 'Change'.
+
+# NOTA: opção espetacular do phpMyAdmin, 'Preview SQL'. Sempre que ela aparece durante as alterações,
+# ao clicar eu vejo uma prévia de como ficaria o comando completo que executaria aquela mudança. Além disso
+# após clicar em 'Save', o log também mostra o comando usado para executar a alteração no topo da tela,
+# e em seguida mostra como ficou a nova estrutura.
+
+# Se eu clicar em 'Edit' na área com o COMANDO na tela de log, o sistema abre a aba 'SQL' com o comando já
+# preenchido, permitindo que eu altere o código se essa for minha preferência.
+
+# Com a tabela selecionada, na aba 'Structure', existe a possibilidade de criar novas colunas e situá-las 
+# exatamente onde quisermos (no fim da tabela ou após algum campo específico) através da opção 'Add'.
+
+# No meu exemplo criei a coluna 'idade' do tipo inteiro, logo após o campo 'nome'. Porém não é boa prática
+# cadastrar idade em bancos de dados, e sim a data de nascimento (para fins de atualização automática via 
+# sistema), e por isso eliminei a coluna clicando em 'Drop'.
+
+# NOTA: lembrar que DROP pode ser tanto comando (DROP TABLE ou DROP DATABASE) quanto parâmetro de comando
+# (ALTER TABLE 'nome' DROP 'coluna').
+
+# Trabalhei até agora os comandos estruturais (DDL), mas é possível também trabalhar os comandos de
+# gerenciamento dos dados (DML) no phpMyAdmin.
+
+# Incluí mais um campo na tabela: 'sexo' do tipo 'ENUM' pré-definindo os valores 'M', 'F' para o campo.
+
+# Em seguida, com a tabela selecionada, basta clicar na aba 'Insert' para começar a adicionar registros
+# usando a coluna 'Value'. Sempre que adicionar mais de um registro de uma vez, usar o botão 'Go' do 
+# rodapé da tela, para que todos sejam gravados de uma vez.
+
+# Se navegarmos até a aba 'Browse' com a tabela selecionada, veremos os registros como se tivéssemos
+# usado o comando SELECT * FROM amigos;
+
+# E é na aba 'Browse' que eu faço alterações nos registros, por exemplo, uma alteração no telefone do
+# João. Clico em 'Edit' e faço a mudança. Ao clicar em 'Go', o registro é atualizado.
+
+# O mesmo serve para apagar um registro, basta clicar em 'Delete'. No meu exemplo apaguei o registro da
+# Ana. É possível também apagar registros em massa, marcando o checkbox ao lado de cada um deles, e 
+# selecionando a opção 'Delete' que fica no rodapé da tabela.
+
+# Sempre vale o reforço: pelo fato de o banco de dados estar num servidor, é possível ver as alterações
+# tanto via console, quanto via outras ferramentas desde que apontando para o servidor onde o banco está
+# hospedado.
+
+# O phpMyAdmin também permite o gerenciamento de arquivos dump (backups) e para isso clicamos em 'Home' no
+# menu principal do lado esquerdo (o ícone da casinha) e navegamos até a aba 'Export'. Existem as opções de
+# exportação rápida (todos os bancos de dados) ou personalizada (bancos de dados selecionados).
+
+# No exercício exportei somente o banco de dados 'exemplo', por isso optei por 'Custom - display all
+# possible options'.
+
+# Ao clicar em 'Export' ele gera o arquivo na pasta configurada para downloads no navegador que estiver
+# usando (no meu caso é a pasta Downloads via Chrome).
+
+# É possível também excluir tabelas no phpMyAdmin navegando até a aba 'Structure' com o banco de dados
+# selecionado. No exercício selecionei o banco 'exemplo' e cliquei em 'Drop' na linha da tabela 'amigos'.
+
+# LEMBRETE: para apagar somente registros usamos o comando TRUNCATE, e para apagar a estrutura e os dados
+# usamos o comando DROP.
+
+# Finalmente, para apagar um banco de dados via phpMyAdmin, basta clicar em 'Home' no menu principal
+# lateral, navegar até a aba 'Databases', selecionar o banco de dados a ser excluído (no exercício apaguei
+# o banco 'exemplo') e clicar em 'Drop'.
+
+
