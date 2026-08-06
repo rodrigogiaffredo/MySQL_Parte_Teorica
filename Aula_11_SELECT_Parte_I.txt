@@ -1,0 +1,99 @@
+
+# COMANDO SELECT - PARTE I
+
+# O comando SELECT é utilizado para obter dados nas tabelas. Trata-se do comando com o maior número 
+# de parâmetros associados da linguagem SQL.
+
+# SELECT é um comando DML - Data Manipulation Language segundo a maioria dos autores, mas outros
+# consideram que ele inaugura uma nova classificação chamada DQL - Data Query Language.
+
+# Os resultados mostrados após a execução do comando SELECT são chamados de RESULT SETS.
+
+# O primeiro comando SELECT utilizado no curso apareceu a partir do momento em que comecei a
+# trabalhar registros e precisava conferir se eles tinham sido atualizados corretamente.
+
+# SELECT * FROM 'tabela' = selecione todos os registros de todos os campos da tabela 'tabela'
+
+# Mas além de apenas selecionar, é possível por exemplo:
+
+# Selecionar e mostrar todos os registros de todos os campos em ordem crescente baseado em algum
+# campo específico (o default é a chave):
+
+# SELECT * FROM tabela
+# ORDER BY campo;
+# Nota: adicionando o parâmetro DESC após o nome do campo, a ordenação passa a ser decrescente.
+# SELECT * FROM tabela
+# ORDER BY campo DESC;
+
+# FILTRAGEM DE COLUNAS
+
+# Selecionar e mostrar registros de campos específicos de forma ordenada:
+
+# SELECT campo1, campo2, campo3 FROM tabela
+# ORDER BY campo1;
+# Nota: é possível alterar a ordem das colunas para fins de organização da saída de dados
+# SELECT campo3, campo1, campo2 FROM tabela
+# ORDER BY campo1;
+
+# Fazer ordenação de mais de um campo (aninhamento) simultâneamente:
+
+# SELECT campo1, campo2, campo3 FROM tabela
+# ORDER BY campo2, campo1;
+
+
+# FILTRAGEM DE LINHAS
+
+# O parâmetro WHERE é o responsável pelo apontamento de linhas em SQL.
+
+# Selecionando todos os registros de uma 'tabela' com 'dado' no 'campo' ordenado por 'outrocampo':
+
+# SELECT * FROM tabela
+# WHERE campo = dado
+# ORDER BY outrocampo;
+# Nota: é possível restringir o número de campos a serem exibidos na consulta
+# SELECT campo1, campo2, campo3 FROM tabela
+# WHERE campo = dado
+# ORDER BY outrocampo;
+
+# Operadores relacionais básicos: = (igual a), != (diferente de), > (maior do que), < (menor do
+# que), >= (maior ou igual a), <= (menor ou igual a)
+# Nota: 'diferente de' também pode ser representado por '<>'
+
+# É possível associar o parâmetro WHERE a OPERADORES RELACIONAIS, por exemplo:
+
+# SELECT campo1, campo2 FROM tabela
+# WHERE campo operadorrelacional dado
+# ORDER BY outrocampo;
+
+# Existem outros operadores relacionais mais sofisticados, tais como:
+
+# BETWEEN (entre), ideal para trabalhar dentro de ranges 'de - até'
+
+# SELECT * FROM tabela
+# WHERE campo BETWEEN 'dado' AND 'dado'
+# ORDER BY outrocampo;
+# ou
+# SELECT campo1, campo2 FROM tabela
+# WHERE campo BETWEEN 'dado' AND 'dado'
+# ORDER BY campo5, campo3;
+
+# IN (em), ideal para trabalhar com recortes específicos 'tal e tal e tal e tal'
+
+# SELECT campo1, campo2 FROM tabela
+# WHERE campo IN ('dado1', 'dado2', 'dado3')
+# ORDER BY campo;
+
+# É possível adicionar ao parâmetro WHERE e aos operadores relacionais, os OPERADORES LÓGICOS:
+
+# AND (e), ideal quando todas as condições devem ser satisfeitas juntamente, sem exceções
+
+# SELECT * FROM tabela
+# WHERE campo operadorrelacional dado AND outrocampo operadorrelacional outrodado
+# ODER BY qualquercampo;
+
+# OR (ou), ideal quando não for obrigatório que todas as condições sejam satisfeitas juntamente
+
+# SELECT * FROM tabela
+# WHERE campo operadorrelacional dado OR outrocampo operadorrelacional outrodado
+# ODER BY qualquercampo;
+
