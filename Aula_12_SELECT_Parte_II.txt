@@ -1,0 +1,130 @@
+
+# COMANDO SELECT - PARTE II
+
+# O comando SELECT é utilizado para obter dados nas tabelas. Trata-se do comando com o maior número 
+# de parâmetros associados da linguagem SQL.
+
+# SELECT é um comando DML - Data Manipulation Language segundo a maioria dos autores, mas outros
+# consideram que ele inaugura uma nova classificação chamada DQL - Data Query Language.
+
+# Os resultados mostrados após a execução do comando SELECT são chamados de RESULT SETS.
+
+# Usando o comando SELECT associado ao operador LIKE (semelhante) para retornar por exemplo aqueles
+# registros que contém um determinado caractere, ou que começam com uma determinada letra, etc.
+
+# LIKE (semelhante)
+
+# SELECT * FROM tabela
+# WHERE campo LIKE 'Algo%';
+
+# Nota: o símbolo '%' é a chamado wild card (carta coringa), o qual substitui nenhum ou vários 
+# caracteres. A posição da wild card faz diferença no resultado da query (início, meio, final).
+
+# No exemplo acima, o comando quer dizer "encontre tudo na 'tabela' onde no 'campo' determinado haja
+# 'Algo' seguido de qualquer coisa".
+
+# O operador LIKE é case sensitive: procurar por 'algo%' dá o mesmo resultado que procurar 
+# por 'ALGO%'.
+
+# SELECT * FROM tabela
+# WHERE campo LIKE '%Algo%';
+
+# NOTA: o comando acima equivale a dizer "selecione na tabela 'tabela' registros que se pareçam com 
+# qualquer coisa contendo 'algoALGO' no campo 'campo', inclusive nada" - ou seja, o que começa ou 
+# termina com 'algoALGO' também será selecionado.
+
+# É possível utilizar a wild card em posições heterodoxas (no começo, no meio, no final, em todos ao
+# mesmo tempo), tudo vai depender da necessidade e do result set esperado.
+
+
+
+# NOT LIKE (não semelhante)
+
+# Literalmente inverte a lógica do LIKE:
+
+# SELECT * FROM tabela
+# WHERE campo NOT LIKE '%Algo%';
+
+# O comando acima seleciona todos os registros da tabela 'tabela' onde no campo 'campo' não haja
+# 'algoALGO' antecedido ou sucedido por qualquer coisa - inclusive nada.
+
+
+# '_' (wild card de exigência)
+
+# Wild card '_': além do '%', existe também a wild card '_' a qual exige que haja um caractere na
+# posição em que ela aparecer.
+
+# SELECT * FROM tabela
+# WHERE campo LIKE '%Algo_';
+
+# No exemplo acima, pode haver qualquer coisa ou nada antes de 'Algo', mas deve obrigatoriamente 
+# ter alguma coisa após 'Algo'.
+
+# Nota: se eu usar dois sublinhados ('__') significa que tem que haver 2 caracteres na posição da
+# wild card; três sublinhados, três caracteres, e assim sucessivamente.
+
+# A combinação SELECT + WHERE + LIKE (NOT LIKE) é uma das mais utilizadas no dia a dia das consultas
+# em bancos de dados. É importante conhecer seus equivalentes em outras linguagens além do MySQL
+# (Oracle, Postgre, etc.)
+
+
+
+# DISTINCT..FROM (distinto ou único.)
+
+# Outro operador utilizado juntamente com o comando SELECT é o DISTINCT..FROM. Ele retorna somente
+# os valores únicos para ilustrar qual o tamanho da variedade de um determinado dado num campo.
+
+# SELECT DISTINCT campo FROM tabela;
+
+# Nota: assim como os demais operadores, o DISTINCT..FROM pode ser combinado com outros parâmetros,
+# como no exemplo abaixo em que o result set será ordenado de forma crescente:
+
+# SELECT DISTINCT campo FROM tabela
+# ORDER BY campo;
+
+
+# FUNÇÕES DE AGREGAÇÃO: selecionam ou totalizam dados. As principais são:
+
+# COUNT (contagem)
+
+# SELECT COUNT(campo) FROM tabela;
+# Nota: é possível mesclar a função COUNT com variáveis, parâmetros e operadores distintos, de 
+# acordo com o resultado esperado na pesquisa:
+# SELECT COUNT(*) FROM tabela
+# WHERE campo operador valor;
+
+
+# MAX (máximo, ou maior valor)
+
+# SELECT MAX(campo) FROM tabela;
+# Nota: igualmente, é possível combinar essa função com outros operadores.
+# SELECT MAX(campo) FROM tabela
+# WHERE campo operador dado;
+
+
+# MIN (mínimo, ou menor valor)
+
+# SELECT MIN(campo) FROM tabela;
+# Nota: igualmente, é possível combinar essa função com outros campos, operadores, parâmetros, etc.
+# SELECT MIN(campo) FROM tabela
+# WHERE campo operador dado;
+
+
+# SUM (soma)
+
+# SELECT SUM(campo) FROM tabela;
+# Nota: igualmente, é possível combinar essa função com outros campos, operadores, parâmetros, etc.
+# SELECT SUM(campo) FROM tabela
+# WHERE campo operador dado;
+
+
+# AVG (média)
+
+# SELECT AVG(campo) FROM tabela;
+# Nota: igualmente, é possível combinar essa função com outros campos, operadores, parâmetros, etc.
+# SELECT AVG(campo) FROM tabela
+# WHERE campo operador dado;
+
+
+
+
